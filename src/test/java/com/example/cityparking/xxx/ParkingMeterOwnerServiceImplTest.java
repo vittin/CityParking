@@ -47,7 +47,8 @@ public class ParkingMeterOwnerServiceImplTest {
                 LocalDateTime.ofInstant(Instant.now(), ZoneId.of("UTC"))
         );
         exampleCustomer.setParkPlaces(Collections.singletonList(examplePark));
-        customerRepository.save(exampleCustomer);
+
+        exampleCustomer = customerRepository.saveAndFlush(exampleCustomer);
     }
 
     @After

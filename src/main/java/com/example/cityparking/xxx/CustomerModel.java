@@ -8,13 +8,13 @@ import java.util.Objects;
 public class CustomerModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
 
     @Column(unique = true)
     String identity;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "customer")
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = ParkModel.class, fetch = FetchType.EAGER)
     List<ParkModel> parkPlaces;
 
     CustomerModel(){}
@@ -49,28 +49,26 @@ public class CustomerModel {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CustomerModel that = (CustomerModel) o;
-        return
-                id == that.id &&
-                Objects.equals(identity, that.identity) &&
-                Objects.equals(parkPlaces, that.parkPlaces);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, identity, parkPlaces);
-    }
-
-    @Override
     public String toString() {
         return "CustomerModel{" +
                 "id=" + id +
                 ", identity='" + identity + '\'' +
                 ", parkPlaces=" + parkPlaces +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CustomerModel)) return false;
+        CustomerModel that = (CustomerModel) o;
+        return  Objects.equals(identity, that.identity) &&
+                Objects.equals(parkPlaces, that.parkPlaces);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(identity, parkPlaces);
     }
 }

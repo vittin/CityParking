@@ -1,6 +1,7 @@
 package com.example.cityparking.xxx;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -8,13 +9,12 @@ import java.util.Objects;
 public class ParkModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer")
+    @ManyToOne(targetEntity = CustomerModel.class)
     CustomerModel customer;
-    //@NotNull
+    @NotNull
     LocalDateTime startDate;
     LocalDateTime endDate;
 
@@ -59,24 +59,6 @@ public class ParkModel {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ParkModel parkModel = (ParkModel) o;
-        return
-                id == parkModel.id &&
-                Objects.equals(customer, parkModel.customer) &&
-                Objects.equals(startDate, parkModel.startDate) &&
-                Objects.equals(endDate, parkModel.endDate);
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(id, customer, startDate, endDate);
-    }
-
-    @Override
     public String toString() {
         return "ParkModel{" +
                 "id=" + id +
@@ -84,5 +66,21 @@ public class ParkModel {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ParkModel)) return false;
+        ParkModel parkModel = (ParkModel) o;
+        return  Objects.equals(customer, parkModel.customer) &&
+                Objects.equals(startDate, parkModel.startDate) &&
+                Objects.equals(endDate, parkModel.endDate);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(customer, startDate, endDate);
     }
 }
