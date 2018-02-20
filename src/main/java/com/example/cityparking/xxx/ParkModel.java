@@ -17,6 +17,8 @@ public class ParkModel {
     @NotNull
     LocalDateTime startDate;
     LocalDateTime endDate;
+    @OneToOne(targetEntity = Price.class, cascade = CascadeType.ALL)
+    Price price;
 
     ParkModel(){}
 
@@ -24,6 +26,13 @@ public class ParkModel {
         this.customer = customer;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    ParkModel(CustomerModel customer, LocalDateTime startDate, LocalDateTime endDate, Price price) {
+        this.customer = customer;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.price = price;
     }
 
     public long getId() {
@@ -58,13 +67,22 @@ public class ParkModel {
         this.endDate = endDate;
     }
 
+    public Price getPrice() {
+        return price;
+    }
+
+    public void setPrice(Price price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "ParkModel{" +
                 "id=" + id +
-                ", customer=" + customer.getId() +
+                ", customer=" + customer.getIdentity() +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
+                ", price=" + price +
                 '}';
     }
 
@@ -73,14 +91,16 @@ public class ParkModel {
         if (this == o) return true;
         if (!(o instanceof ParkModel)) return false;
         ParkModel parkModel = (ParkModel) o;
-        return  Objects.equals(customer, parkModel.customer) &&
+        return id == parkModel.id &&
+                Objects.equals(customer.getId(), parkModel.customer.getId()) &&
                 Objects.equals(startDate, parkModel.startDate) &&
-                Objects.equals(endDate, parkModel.endDate);
+                Objects.equals(endDate, parkModel.endDate) &&
+                Objects.equals(price, parkModel.price);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(customer, startDate, endDate);
+        return Objects.hash(id, customer, startDate, endDate, price);
     }
 }

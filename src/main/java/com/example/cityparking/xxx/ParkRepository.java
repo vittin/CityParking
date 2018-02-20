@@ -3,9 +3,14 @@ package com.example.cityparking.xxx;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface ParkRepository  extends JpaRepository<ParkModel, Long> {
-    List<ParkModel> findByCustomerIdentity(String customerIdentity);
+    List<ParkModel> findAllByCustomerIdentity(String customerIdentity);
+
+    List<ParkModel> findAllByEndDateIsBetween(LocalDateTime from, LocalDateTime to);
+
+    List<ParkModel> findAllByEndDateIsBetweenAndPriceIsNotNull(LocalDateTime from, LocalDateTime to);
 }

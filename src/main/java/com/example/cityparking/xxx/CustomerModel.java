@@ -1,6 +1,7 @@
 package com.example.cityparking.xxx;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,6 +41,13 @@ public class CustomerModel {
         this.identity = identity;
     }
 
+    public void addParkPlace(ParkModel parkModel) {
+        if (parkPlaces == null){
+            parkPlaces = new ArrayList<>();
+        }
+        parkPlaces.add(parkModel);
+    }
+
     public List<ParkModel> getParkPlaces() {
         return parkPlaces;
     }
@@ -62,13 +70,12 @@ public class CustomerModel {
         if (this == o) return true;
         if (!(o instanceof CustomerModel)) return false;
         CustomerModel that = (CustomerModel) o;
-        return  Objects.equals(identity, that.identity) &&
-                Objects.equals(parkPlaces, that.parkPlaces);
+        return  Objects.equals(identity, that.identity);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(identity, parkPlaces);
+        return Objects.hash(identity);
     }
 }

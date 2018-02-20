@@ -10,13 +10,15 @@ import java.util.Map;
 @Service
 public class ParkingMeterOwnerServiceImpl implements ParkingMeterOwnerService {
 
-    private CashSummaryService cashSummaryService;
+    private CashSummaryServiceImpl cashSummaryService;
     private CustomerRepository customerRepository;
+    private ParkRepository parkRepository;
 
     @Autowired
-    public ParkingMeterOwnerServiceImpl(CashSummaryService cashSummaryService, CustomerRepository customerRepository) {
+    public ParkingMeterOwnerServiceImpl(CashSummaryServiceImpl cashSummaryService, CustomerRepository customerRepository, ParkRepository parkRepository) {
         this.cashSummaryService = cashSummaryService;
         this.customerRepository = customerRepository;
+        this.parkRepository = parkRepository;
     }
 
     @Override
@@ -26,11 +28,16 @@ public class ParkingMeterOwnerServiceImpl implements ParkingMeterOwnerService {
 
     @Override
     public ParkModel parkInfo(long parkID) {
-        return null;
+        return parkRepository.findOne(parkID);
     }
 
     @Override
-    public Map<Currency, Integer> cashSummary(LocalDate date) {
-        return cashSummaryService.getCashSummary();
+    public Map<Currency, Double> cashSummary(LocalDate date) {
+        return cashSummaryService.getCashSummary(date);
+    }
+
+    @Override
+    public Double cashSummary(LocalDate date, Currency currency) {
+        return cashSummaryService.getCashSummary(date, currency);
     }
 }
