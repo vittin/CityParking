@@ -1,5 +1,10 @@
-package com.example.cityparking.xxx;
+package com.example.cityparking.owner;
 
+import com.example.cityparking.dao.model.CustomerModel;
+import com.example.cityparking.dao.CustomerRepository;
+import com.example.cityparking.dao.model.ParkModel;
+import com.example.cityparking.dao.ParkRepository;
+import com.example.cityparking.payment.CashSummaryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,9 +15,9 @@ import java.util.Map;
 @Service
 public class ParkingMeterOwnerServiceImpl implements ParkingMeterOwnerService {
 
-    private CashSummaryServiceImpl cashSummaryService;
-    private CustomerRepository customerRepository;
-    private ParkRepository parkRepository;
+    private final CashSummaryServiceImpl cashSummaryService;
+    private final CustomerRepository customerRepository;
+    private final ParkRepository parkRepository;
 
     @Autowired
     public ParkingMeterOwnerServiceImpl(CashSummaryServiceImpl cashSummaryService, CustomerRepository customerRepository, ParkRepository parkRepository) {

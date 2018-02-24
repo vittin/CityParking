@@ -1,4 +1,6 @@
-package com.example.cityparking.xxx;
+package com.example.cityparking.dao.model;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,25 +12,27 @@ public class ParkModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
+    private long id;
 
-    @ManyToOne(targetEntity = CustomerModel.class)
-    CustomerModel customer;
+    @ManyToOne(targetEntity = CustomerModel.class, cascade = CascadeType.ALL)
     @NotNull
-    LocalDateTime startDate;
-    LocalDateTime endDate;
+    @JsonManagedReference
+    private CustomerModel customer;
+    @NotNull
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
     @OneToOne(targetEntity = Price.class, cascade = CascadeType.ALL)
-    Price price;
+    private Price price;
 
     ParkModel(){}
 
-    ParkModel(CustomerModel customer, LocalDateTime startDate, LocalDateTime endDate) {
+    public ParkModel(CustomerModel customer, LocalDateTime startDate, LocalDateTime endDate) {
         this.customer = customer;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    ParkModel(CustomerModel customer, LocalDateTime startDate, LocalDateTime endDate, Price price) {
+    public ParkModel(CustomerModel customer, LocalDateTime startDate, LocalDateTime endDate, Price price) {
         this.customer = customer;
         this.startDate = startDate;
         this.endDate = endDate;

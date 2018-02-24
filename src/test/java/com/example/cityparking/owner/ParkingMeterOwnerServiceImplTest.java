@@ -1,5 +1,10 @@
-package com.example.cityparking.xxx;
+package com.example.cityparking.owner;
 
+import com.example.cityparking.dao.*;
+import com.example.cityparking.dao.model.CustomerModel;
+import com.example.cityparking.dao.model.ParkModel;
+import com.example.cityparking.dao.model.Price;
+import com.example.cityparking.owner.ParkingMeterOwnerService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

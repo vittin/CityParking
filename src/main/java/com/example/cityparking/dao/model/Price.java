@@ -1,4 +1,4 @@
-package com.example.cityparking.xxx;
+package com.example.cityparking.dao.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,8 +41,9 @@ public class Price {
         return value;
     }
 
-    public void markPaid(){
+    public Price markPaid(){
         this.paid = true;
+        return this;
     }
 
     public boolean isPaid(){
@@ -56,8 +57,10 @@ public class Price {
     @Override
     public String toString() {
         return "Price{" +
-                "paymentCurrency=" + currency +
+                "id=" + id +
+                ", currency=" + currency +
                 ", value=" + value +
+                ", paid=" + paid +
                 '}';
     }
 
@@ -67,6 +70,7 @@ public class Price {
         if (!(o instanceof Price)) return false;
         Price price = (Price) o;
         return id == price.id &&
+                paid == price.paid &&
                 Objects.equals(currency, price.currency) &&
                 Objects.equals(value, price.value);
     }
@@ -74,6 +78,6 @@ public class Price {
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, currency, value);
+        return Objects.hash(id, currency, value, paid);
     }
 }

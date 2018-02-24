@@ -1,5 +1,8 @@
-package com.example.cityparking.xxx;
+package com.example.cityparking.payment;
 
+import com.example.cityparking.dao.model.ParkModel;
+import com.example.cityparking.dao.ParkRepository;
+import com.example.cityparking.dao.model.Price;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 public class CashSummaryServiceImpl implements CashSummaryService {
 
-    private ParkRepository parkRepository;
+    private final ParkRepository parkRepository;
 
     @Autowired
     public CashSummaryServiceImpl(ParkRepository parkRepository) {
@@ -25,7 +28,9 @@ public class CashSummaryServiceImpl implements CashSummaryService {
 
         Map<Currency, Double> cashSummary = new HashMap<>();
         Set<Currency> availableCurrencies = parkEvents.stream()
-                .map(e -> e.getPrice().getCurrency())
+                .map(e -> Optional.ofNullable(e.getPrice())
+                        .map(Price::getCurrency)
+                        .orElse(Currency.getInstance("PLN")))
                 .collect(Collectors.toSet());
 
         //todo: im pretty sure that it can be done with one stream - fix later
@@ -43,7 +48,8 @@ public class CashSummaryServiceImpl implements CashSummaryService {
         return parkEvents.stream()
                 .map(ParkModel::getPrice)
                 .filter(p -> currency.equals(p.getCurrency()))
-                .mapToDouble(Price::getValue).sum();
+                .mapToDouble(Price::getValue)
+                .sum();
     }
 
     private List<ParkModel> getEvents(LocalDate localDate){

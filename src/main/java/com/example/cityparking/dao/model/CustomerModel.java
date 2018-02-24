@@ -1,4 +1,6 @@
-package com.example.cityparking.xxx;
+package com.example.cityparking.dao.model;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,19 +12,29 @@ public class CustomerModel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
+    private long id;
 
     @Column(unique = true)
-    String identity;
+    private String identity;
+
+    private CustomerType customerType;
 
     @OneToMany(cascade = CascadeType.ALL, targetEntity = ParkModel.class, fetch = FetchType.EAGER)
-    List<ParkModel> parkPlaces;
+    @JsonBackReference
+    private List<ParkModel> parkPlaces;
 
     CustomerModel(){}
 
-    CustomerModel(String identity, List<ParkModel> parkPlaces) {
+    public CustomerModel(String identity, List<ParkModel> parkPlaces) {
         this.identity = identity;
         this.parkPlaces = parkPlaces;
+        this.customerType = CustomerType.REGULAR;
+    }
+
+    public CustomerModel(String identity, List<ParkModel> parkPlaces, CustomerType customerType) {
+        this.identity = identity;
+        this.parkPlaces = parkPlaces;
+        this.customerType = customerType;
     }
 
     public long getId() {
@@ -46,6 +58,14 @@ public class CustomerModel {
             parkPlaces = new ArrayList<>();
         }
         parkPlaces.add(parkModel);
+    }
+
+    public CustomerType getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(CustomerType customerType) {
+        this.customerType = customerType;
     }
 
     public List<ParkModel> getParkPlaces() {

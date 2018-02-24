@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "park.fee.regular.prices",
+      "type": "java.util.List",
+      "description": "Comma separated list of fees for each started parking hour."
+    },
+    {
+      "name": "park.fee.regular.multiplier",
+      "type": "java.lang.String",
+      "description": "Multiplier for park cost for each additional hour over 2. For regular customer."
+    },
+    {
+      "name": "park.fee.vip.multiplier",
+      "type": "java.lang.String",
+      "description": "Multiplier for park cost for each additional hour over 2. For vip customer."
+    },
+    {
+      "name": "park.fee.vip.prices",
+      "type": "java.lang.String",
+      "description": "Comma separated list of fees for each started parking hour."
+    }
+  ] }
